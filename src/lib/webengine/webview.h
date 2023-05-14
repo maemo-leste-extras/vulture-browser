@@ -193,8 +193,9 @@ private:
     WheelHelper m_wheelHelper;
 
     static bool s_forceContextMenuOnMouseRelease;
-    bool mouseHeld;
-    QPoint mousePos;
+    bool m_mouseHeld;
+    bool m_mouseMoved;
+    QPoint m_mousePos;
 };
 
 #endif // WEBVIEW_H

@@ -60,8 +60,9 @@ WebView::WebView(QWidget* parent)
     , m_backgroundActivity(false)
     , m_page(0)
     , m_firstLoad(false)
-    , mouseHeld(false)
-    , mousePos(0,0)
+    , m_mouseHeld(false)
+    , m_mouseMoved(false)
+    , m_mousePos(0,0)
 {
     connect(this, &QWebEngineView::loadStarted, this, &WebView::slotLoadStarted);
     connect(this, &QWebEngineView::loadProgress, this, &WebView::slotLoadProgress);
@@ -172,6 +173,7 @@ void WebView::setPage(WebPage *page)
 
     // Scrollbars must be added only after QWebEnginePage is set
     WebScrollBarManager::instance()->addWebView(this);
+
 
     Q_EMIT pageChanged(m_page);
     mApp->plugins()->emitWebPageCreated(m_page);
@@ -1094,9 +1096,10 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:
-        mouseHeld = true;
-        mousePos.setX(event->pos().x());
-        mousePos.setY(event->pos().y());
+        m_mouseHeld = true;
+        m_mouseMoved = false;
+        m_mousePos.setX(event->globalPos().x());
+        m_mousePos.setY(event->globalPos().y());
         m_clickedUrl = page()->hitTestContent(event->pos()).linkUrl();
         break;
 
@@ -1124,9 +1127,14 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:
-        mouseHeld = false;
-        if (!m_clickedUrl.isEmpty()) {
-            const QUrl link = page()->hitTestContent(event->pos()).linkUrl();
+        m_mouseHeld = false;
+        if(m_mouseMoved)
+        {
+            m_mouseMoved = false;
+            event->accept();
+        }
+        else if (!m_clickedUrl.isEmpty()) {
+            const QUrl link = page()->hitTestContent(event->pos()).linkUrl(); // TODO: remove this condition?
             if (m_clickedUrl == link && isUrlValid(link)) {
                 if (event->modifiers() & Qt::ControlModifier) {
                     userDefinedOpenUrlInNewTab(link, event->modifiers() & Qt::ShiftModifier);
@@ -1151,9 +1159,14 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
 
 void WebView::_mouseMoveEvent(QMouseEvent *event)
 {
-    if (mouseHeld) {
-        QPoint deltaPos(mousePos.x()-event->pos().x(),mousePos.y()-event->pos().y());
+    if (m_mouseHeld) {
+        m_mouseMoved = true;
+        int mx = event->globalPos().x();
+        int my = event->globalPos().y();
+        QPoint deltaPos(m_mousePos.x()-mx,m_mousePos.y()-my);
         page()->scroll(deltaPos.x(),deltaPos.y());
+        m_mousePos.setX(mx);
+        m_mousePos.setY(my);
         event->accept();
     }
     if (mApp->plugins()->processMouseMove(Qz::ON_WebView, this, event)) {
