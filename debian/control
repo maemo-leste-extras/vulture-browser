@@ -7,7 +7,7 @@ Suggests: qtwebengine5-dev-tools
 Conflicts: falkon
 Replaces: falkon
 Provides: www-browser
-Section: web
+Section: user/network
 Priority: optional
 Homepage: https://gitlab.com/le0nklcpp/vulture-browser
 Description: Fork of Falkon browser that has KDE bloatware removed
