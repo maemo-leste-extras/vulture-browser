@@ -969,6 +969,8 @@ void Preferences::saveSettings()
     settings.setValue("intPDFViewer", ui->intPDFViewer->isChecked());
     settings.setValue("screenCaptureEnabled", ui->screenCaptureEnabled->isChecked());
     settings.setValue("hardwareAccel", ui->hardwareAccel->isChecked());
+/*    settings.setValue("mouseDelay", ui->mouseDelay->value());
+    settings.setValue("mouseThreshold", ui->mouseThreshold->value());*/
 #ifdef Q_OS_WIN
     settings.setValue("CheckDefaultBrowser", ui->checkDefaultBrowser->isChecked());
 #endif

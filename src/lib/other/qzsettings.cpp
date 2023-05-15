@@ -49,6 +49,8 @@ void QzSettings::loadSettings()
     loadTabsOnActivation = settings.value("LoadTabsOnActivation", true).toBool();
     autoOpenProtocols = settings.value("AutomaticallyOpenProtocols", QStringList()).toStringList();
     blockedProtocols = settings.value("BlockOpeningProtocols", QStringList()).toStringList();
+    mouseDelay = settings.value("MouseDelay",50).toInt();
+    mouseThreshold = settings.value("MouseThreshold",50).toInt();
     settings.endGroup();
 
     settings.beginGroup("Browser-Tabs-Settings");
@@ -56,6 +58,7 @@ void QzSettings::loadSettings()
     tabsOnTop = settings.value("TabsOnTop", true).toBool();
     openPopupsInTabs = settings.value("OpenPopupsInTabs", false).toBool();
     alwaysSwitchTabsWithWheel = settings.value("AlwaysSwitchTabsWithWheel", false).toBool();
+
     settings.endGroup();
 }
 

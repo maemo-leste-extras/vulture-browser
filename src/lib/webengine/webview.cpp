@@ -37,6 +37,7 @@
 #include "webscrollbarmanager.h"
 
 #include <iostream>
+#include <cmath>
 
 #include <QDir>
 #include <QTimer>
@@ -63,6 +64,7 @@ WebView::WebView(QWidget* parent)
     , m_mouseHeld(false)
     , m_mouseMoved(false)
     , m_mousePos(0,0)
+    , m_mouseStartPos(0,0)
 {
     connect(this, &QWebEngineView::loadStarted, this, &WebView::slotLoadStarted);
     connect(this, &QWebEngineView::loadProgress, this, &WebView::slotLoadProgress);
@@ -1096,9 +1098,11 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:
+        m_mouseTime = m_mouseTime.currentDateTime();
         m_mouseHeld = true;
         m_mouseMoved = false;
         m_mousePos = event->globalPos();
+        m_mouseStartPos = m_mousePos;
         m_clickedUrl = page()->hitTestContent(event->pos()).linkUrl();
         break;
 
@@ -1125,11 +1129,13 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
         }
         break;
 
-    case Qt::LeftButton:
+    case Qt::LeftButton: {
         m_mouseHeld = false;
-        if(m_mouseMoved)
+        qint64 deltaTime = m_mouseTime.currentDateTime().toMSecsSinceEpoch()-m_mouseTime.toMSecsSinceEpoch();
+        QPoint deltaPos = event->globalPos() - m_mouseStartPos;
+        int deltaLen = sqrt(deltaPos.x()*deltaPos.x()+deltaPos.y()*deltaPos.y());
+        if(m_mouseMoved&&(deltaTime>qzSettings->mouseDelay||deltaLen>qzSettings->mouseThreshold))
         {
-            m_mouseMoved = false;
             event->accept();
         }
         else if (!m_clickedUrl.isEmpty()) {
@@ -1140,6 +1146,8 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
                     event->accept();
                 }
             }
+        }
+        m_mouseMoved = false;
         }
         break;
 

@@ -59,6 +59,9 @@ public:
     bool tabsOnTop;
     bool openPopupsInTabs;
     bool alwaysSwitchTabsWithWheel;
+
+    int mouseThreshold;
+    int mouseDelay;
 };
 
 #define qzSettings Settings::staticSettings()
