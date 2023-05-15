@@ -1098,8 +1098,7 @@ void WebView::_mousePressEvent(QMouseEvent *event)
     case Qt::LeftButton:
         m_mouseHeld = true;
         m_mouseMoved = false;
-        m_mousePos.setX(event->globalPos().x());
-        m_mousePos.setY(event->globalPos().y());
+        m_mousePos = event->globalPos();
         m_clickedUrl = page()->hitTestContent(event->pos()).linkUrl();
         break;
 
@@ -1161,12 +1160,9 @@ void WebView::_mouseMoveEvent(QMouseEvent *event)
 {
     if (m_mouseHeld) {
         m_mouseMoved = true;
-        int mx = event->globalPos().x();
-        int my = event->globalPos().y();
-        QPoint deltaPos(m_mousePos.x()-mx,m_mousePos.y()-my);
+        QPoint deltaPos(m_mousePos-event->globalPos());
         page()->scroll(deltaPos.x(),deltaPos.y());
-        m_mousePos.setX(mx);
-        m_mousePos.setY(my);
+        m_mousePos = event->globalPos();
         event->accept();
     }
     if (mApp->plugins()->processMouseMove(Qz::ON_WebView, this, event)) {

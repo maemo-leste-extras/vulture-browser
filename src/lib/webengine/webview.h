@@ -21,6 +21,9 @@
 #include <QPointer>
 #include <QWebEngineView>
 
+// TODO: I will have to implement MouseEvent timer
+// Should it be QDateTime or time.h?
+
 #include "qzcommon.h"
 #include "loadrequest.h"
 #include "wheelhelper.h"
