@@ -292,7 +292,8 @@ Preferences::Preferences(BrowserWindow* window)
     ui->intPDFViewer->setEnabled(ui->allowPlugins->isChecked());
     ui->screenCaptureEnabled->setChecked(settings.value("screenCaptureEnabled", false).toBool());
     ui->hardwareAccel->setChecked(settings.value("hardwareAccel", false).toBool());
-
+    ui->mouseDelay->setText(settings.value("mouseDelay",145).toString());
+    ui->mouseThreshold->setText(settings.value("mouseThreshold",200).toString());
     const auto levels = WebView::zoomLevels();
     for (int level : levels) {
         ui->defaultZoomLevel->addItem(tr("%1%").arg(QString::number(level)));
@@ -969,8 +970,8 @@ void Preferences::saveSettings()
     settings.setValue("intPDFViewer", ui->intPDFViewer->isChecked());
     settings.setValue("screenCaptureEnabled", ui->screenCaptureEnabled->isChecked());
     settings.setValue("hardwareAccel", ui->hardwareAccel->isChecked());
-/*    settings.setValue("mouseDelay", ui->mouseDelay->value());
-    settings.setValue("mouseThreshold", ui->mouseThreshold->value());*/
+    settings.setValue("mouseDelay", ui->mouseDelay->text().toInt());
+    settings.setValue("mouseThreshold", ui->mouseThreshold->text().toInt());
 #ifdef Q_OS_WIN
     settings.setValue("CheckDefaultBrowser", ui->checkDefaultBrowser->isChecked());
 #endif
