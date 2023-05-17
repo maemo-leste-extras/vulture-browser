@@ -292,7 +292,7 @@ Preferences::Preferences(BrowserWindow* window)
     ui->intPDFViewer->setEnabled(ui->allowPlugins->isChecked());
     ui->screenCaptureEnabled->setChecked(settings.value("screenCaptureEnabled", false).toBool());
     ui->hardwareAccel->setChecked(settings.value("hardwareAccel", false).toBool());
-    ui->mouseDelay->setText(settings.value("mouseDelay",145).toString());
+    ui->mouseDelay->setText(settings.value("mouseDelay",210).toString());
     ui->mouseThreshold->setText(settings.value("mouseThreshold",200).toString());
     const auto levels = WebView::zoomLevels();
     for (int level : levels) {

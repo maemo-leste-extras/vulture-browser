@@ -49,7 +49,7 @@ void QzSettings::loadSettings()
     loadTabsOnActivation = settings.value("LoadTabsOnActivation", true).toBool();
     autoOpenProtocols = settings.value("AutomaticallyOpenProtocols", QStringList()).toStringList();
     blockedProtocols = settings.value("BlockOpeningProtocols", QStringList()).toStringList();
-    mouseDelay = settings.value("MouseDelay",145).toInt();
+    mouseDelay = settings.value("MouseDelay",210).toInt();
     mouseThreshold = settings.value("MouseThreshold",200).toInt();
     settings.endGroup();
 

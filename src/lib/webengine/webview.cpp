@@ -1139,10 +1139,9 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
             event->accept();
         }
         else if (!m_clickedUrl.isEmpty()) {
-            const QUrl link = page()->hitTestContent(event->pos()).linkUrl(); // TODO: remove this condition?
-            if (m_clickedUrl == link && isUrlValid(link)) {
+            if (/*((m_clickedUrl == page()->hitTestContent(event->pos()).linkUrl())) && */isUrlValid(m_clickedUrl)) {
                 if (event->modifiers() & Qt::ControlModifier) {
-                    userDefinedOpenUrlInNewTab(link, event->modifiers() & Qt::ShiftModifier);
+                    userDefinedOpenUrlInNewTab(m_clickedUrl, event->modifiers() & Qt::ShiftModifier);
                     event->accept();
                 }
             }
