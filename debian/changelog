@@ -1,3 +1,10 @@
+vulture-browser (23.04.0-1) unstable; urgency=low
+
+ * Added finger scrolling settings
+ * Improved finger scrolling
+
+-- le0nklcpp le0nklcpp@gmail.com Thu 18 May 2023 19:18:00 +0300
+
 vulture-browser (23.04.0) unstable;
 
  * Initial release
