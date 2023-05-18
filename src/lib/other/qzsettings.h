@@ -60,6 +60,7 @@ public:
     bool openPopupsInTabs;
     bool alwaysSwitchTabsWithWheel;
 
+    bool enableFingerScrolling;
     int mouseThreshold;
     int mouseDelay;
 };

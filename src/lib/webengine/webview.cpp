@@ -1098,11 +1098,13 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:
+        if(qzSettings->enableFingerScrolling) { // do not catch our fabricated event
         m_mouseTime = m_mouseTime.currentDateTime();
         m_mouseHeld = true;
-        m_mouseMoved = false;
         m_mousePos = event->globalPos();
         m_mouseStartPos = m_mousePos;
+        event->accept();
+        }
         m_clickedUrl = page()->hitTestContent(event->pos()).linkUrl();
         break;
 
@@ -1129,21 +1131,28 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
         }
         break;
 
-    case Qt::LeftButton: {
-        m_mouseHeld = false;
-        qint64 deltaTime = m_mouseTime.currentDateTime().toMSecsSinceEpoch()-m_mouseTime.toMSecsSinceEpoch();
-        QPoint deltaPos = event->globalPos() - m_mouseStartPos;
-        int deltaLen = sqrt(deltaPos.x()*deltaPos.x()+deltaPos.y()*deltaPos.y());
-        if(m_mouseMoved&&(deltaTime>qzSettings->mouseDelay||deltaLen>qzSettings->mouseThreshold))
-        {
-            event->accept();
+    case Qt::LeftButton:{
+        if(qzSettings->enableFingerScrolling) {
+            m_mouseHeld = false;
+            qint64 deltaTime = m_mouseTime.currentDateTime().toMSecsSinceEpoch()-m_mouseTime.toMSecsSinceEpoch();
+            QPoint deltaPos = event->globalPos() - m_mouseStartPos;
+            int deltaLen = sqrt(deltaPos.x()*deltaPos.x()+deltaPos.y()*deltaPos.y());
+            if(m_mouseMoved&&(deltaTime>qzSettings->mouseDelay||deltaLen>qzSettings->mouseThreshold))
+            {
+                event->accept();
+            }
+            else if(!m_clickedUrl.isEmpty()){ // We did not scroll - send it to WebEngineView already
+                QMouseEvent newEvent = QMouseEvent(QEvent::MouseButtonPress,event->localPos(),event->screenPos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
+                page()->event(&newEvent);
+                event->accept();
+                setUrl(m_clickedUrl);
+            }
         }
         else if (!m_clickedUrl.isEmpty()) {
-            if (/*((m_clickedUrl == page()->hitTestContent(event->pos()).linkUrl())) && */isUrlValid(m_clickedUrl)) {
-                if (event->modifiers() & Qt::ControlModifier) {
-                    userDefinedOpenUrlInNewTab(m_clickedUrl, event->modifiers() & Qt::ShiftModifier);
-                    event->accept();
-                }
+            const QUrl link = page()->hitTestContent(event->pos()).linkUrl();
+            if (m_clickedUrl == link && isUrlValid(link)) {
+                userDefinedOpenUrlInNewTab(link, event->modifiers() & Qt::ShiftModifier);
+                event->accept();
             }
         }
         m_mouseMoved = false;

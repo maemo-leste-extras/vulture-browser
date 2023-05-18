@@ -51,6 +51,7 @@ void QzSettings::loadSettings()
     blockedProtocols = settings.value("BlockOpeningProtocols", QStringList()).toStringList();
     mouseDelay = settings.value("MouseDelay",210).toInt();
     mouseThreshold = settings.value("MouseThreshold",200).toInt();
+    enableFingerScrolling = settings.value("enableFingerScrolling",true).toBool();
     settings.endGroup();
 
     settings.beginGroup("Browser-Tabs-Settings");

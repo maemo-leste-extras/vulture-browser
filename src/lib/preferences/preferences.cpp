@@ -292,6 +292,7 @@ Preferences::Preferences(BrowserWindow* window)
     ui->intPDFViewer->setEnabled(ui->allowPlugins->isChecked());
     ui->screenCaptureEnabled->setChecked(settings.value("screenCaptureEnabled", false).toBool());
     ui->hardwareAccel->setChecked(settings.value("hardwareAccel", false).toBool());
+    ui->enableFingerScrolling->setChecked(settings.value("enableFingerScrolling",true).toBool());
     ui->mouseDelay->setText(settings.value("mouseDelay",210).toString());
     ui->mouseThreshold->setText(settings.value("mouseThreshold",200).toString());
     const auto levels = WebView::zoomLevels();
@@ -970,6 +971,7 @@ void Preferences::saveSettings()
     settings.setValue("intPDFViewer", ui->intPDFViewer->isChecked());
     settings.setValue("screenCaptureEnabled", ui->screenCaptureEnabled->isChecked());
     settings.setValue("hardwareAccel", ui->hardwareAccel->isChecked());
+    settings.setValue("enableFingerScrolling",ui->enableFingerScrolling->isChecked());
     settings.setValue("mouseDelay", ui->mouseDelay->text().toInt());
     settings.setValue("mouseThreshold", ui->mouseThreshold->text().toInt());
 #ifdef Q_OS_WIN
