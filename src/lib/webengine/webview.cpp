@@ -1132,20 +1132,27 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:{
-        if(qzSettings->enableFingerScrolling) {
+        if(qzSettings->enableFingerScrolling) { // This code style is definitely not for such branching
             m_mouseHeld = false;
             qint64 deltaTime = m_mouseTime.currentDateTime().toMSecsSinceEpoch()-m_mouseTime.toMSecsSinceEpoch();
-            QPoint deltaPos = event->globalPos() - m_mouseStartPos;
-            int deltaLen = sqrt(deltaPos.x()*deltaPos.x()+deltaPos.y()*deltaPos.y());
-            if(m_mouseMoved&&(deltaTime>qzSettings->mouseDelay||deltaLen>qzSettings->mouseThreshold))
+            if(m_mouseMoved)
             {
                 event->accept();
             }
-            else if(!m_clickedUrl.isEmpty()){ // We did not scroll - send it to WebEngineView already
-                QMouseEvent newEvent = QMouseEvent(QEvent::MouseButtonPress,event->localPos(),event->screenPos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
-                page()->event(&newEvent);
-                event->accept();
-                setUrl(m_clickedUrl);
+            else if(!m_clickedUrl.isEmpty()) { // We did not scroll - send it to WebEngineView already
+                if(deltaTime>qzSettings->mouseDelay) { // long press = open context menu
+                    QContextMenuEvent ev(QContextMenuEvent::Mouse, event->pos(), event->globalPos(), event->modifiers());
+                    _contextMenuEvent(&ev);
+                    event->accept();
+                }
+                else {
+                    QMouseEvent newEvent = QMouseEvent(QEvent::MouseButtonPress,event->localPos(),event->screenPos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
+                    QMouseEvent releaseEvent = QMouseEvent(QEvent::MouseButtonRelease,event->localPos(),event->screenPos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
+                    page()->event(&newEvent);
+                    page()->event(&releaseEvent); // TODO: possibly may break some sites, delay needed
+                    event->accept();
+                    setUrl(m_clickedUrl);
+                }
             }
         }
         else if (!m_clickedUrl.isEmpty()) {
@@ -1175,10 +1182,17 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
 void WebView::_mouseMoveEvent(QMouseEvent *event)
 {
     if (m_mouseHeld) {
-        m_mouseMoved = true;
         QPoint deltaPos(m_mousePos-event->globalPos());
-        page()->scroll(deltaPos.x(),deltaPos.y());
-        m_mousePos = event->globalPos();
+        if(m_mouseMoved) {
+            page()->scroll(deltaPos.x(),deltaPos.y());
+            m_mousePos = event->globalPos();
+        }
+        else {
+            int deltaLen = sqrt(deltaPos.x()*deltaPos.x()+deltaPos.y()*deltaPos.y());
+            if(deltaLen>qzSettings->mouseThreshold)  {
+                m_mouseMoved = true;
+            }
+        }
         event->accept();
     }
     if (mApp->plugins()->processMouseMove(Qz::ON_WebView, this, event)) {
