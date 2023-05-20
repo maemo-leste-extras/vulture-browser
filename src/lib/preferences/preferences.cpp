@@ -48,6 +48,7 @@
 #include "webscrollbarmanager.h"
 #include "protocolhandlerdialog.h"
 #include "../config.h"
+#include "gesturesettings.h"
 
 #include <QSettings>
 #include <QInputDialog>
@@ -294,7 +295,7 @@ Preferences::Preferences(BrowserWindow* window)
     ui->hardwareAccel->setChecked(settings.value("hardwareAccel", false).toBool());
     ui->enableFingerScrolling->setChecked(settings.value("enableFingerScrolling",true).toBool());
     ui->mouseDelay->setText(settings.value("mouseDelay",210).toString());
-    ui->mouseThreshold->setText(settings.value("mouseThreshold",200).toString());
+    ui->mouseThreshold->setText(settings.value("mouseThreshold",20).toString());
     const auto levels = WebView::zoomLevels();
     for (int level : levels) {
         ui->defaultZoomLevel->addItem(tr("%1%").arg(QString::number(level)));
@@ -541,6 +542,9 @@ Preferences::Preferences(BrowserWindow* window)
     settings.endGroup();
 
     QzTools::setWmClass("Preferences", this);
+
+    ui->mouseThreshold->setValidator(new QIntValidator(0, 9000, this));
+    ui->mouseDelay->setValidator(new QIntValidator(0, 9000, this));
 }
 
 void Preferences::allowPluginsToggled(bool checked)
@@ -1069,6 +1073,7 @@ void Preferences::saveSettings()
     mApp->desktopNotifications()->loadSettings();
     mApp->autoFill()->loadSettings();
     mApp->networkManager()->loadSettings();
+    gestureSettings->loadSettings();
 
     WebScrollBarManager::instance()->loadSettings();
 }

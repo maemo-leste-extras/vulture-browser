@@ -73,6 +73,7 @@ public:
     // This allows to override right mouse button events (eg. for mouse gestures)
     static bool forceContextMenuOnMouseRelease();
     static void setForceContextMenuOnMouseRelease(bool force);
+    static void loadSettings();
 
 Q_SIGNALS:
     void pageChanged(WebPage *page);
@@ -196,6 +197,9 @@ private:
 
     static bool s_forceContextMenuOnMouseRelease;
 
+    int mouseDelay;
+    int mouseThreshold;
+   
     bool m_mouseHeld;
     bool m_mouseMoved;
     QPoint m_mouseStartPos;

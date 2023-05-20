@@ -59,10 +59,6 @@ public:
     bool tabsOnTop;
     bool openPopupsInTabs;
     bool alwaysSwitchTabsWithWheel;
-
-    bool enableFingerScrolling;
-    int mouseThreshold;
-    int mouseDelay;
 };
 
 #define qzSettings Settings::staticSettings()

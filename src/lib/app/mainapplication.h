@@ -26,6 +26,7 @@
 #include "qtsingleapplication/qtsingleapplication.h"
 #include "restoremanager.h"
 #include "qzcommon.h"
+#include "gesturesettings.h"
 
 class QMenu;
 class QWebEngineProfile;
@@ -114,6 +115,7 @@ public:
     DesktopNotificationsFactory* desktopNotifications();
     QWebEngineProfile* webProfile() const;
     QWebEngineSettings *webSettings() const;
+    GestureSettings *_gestureSettings();
 
     QByteArray saveState() const;
 
@@ -188,6 +190,7 @@ private:
     HTML5PermissionsManager* m_html5PermissionsManager;
     DesktopNotificationsFactory* m_desktopNotifications;
     QWebEngineProfile* m_webProfile;
+    GestureSettings m_GestureSettings;
 
     AutoSaver* m_autoSaver;
     ProxyStyle *m_proxyStyle = nullptr;

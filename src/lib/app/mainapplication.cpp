@@ -46,6 +46,7 @@
 #include "closedwindowsmanager.h"
 #include "protocolhandlermanager.h"
 #include "../config.h"
+#include "gesturesettings.h"
 
 #include <QWebEngineSettings>
 #include <QDesktopServices>
@@ -646,6 +647,10 @@ QWebEngineSettings *MainApplication::webSettings() const
     return m_webProfile->settings();
 }
 
+GestureSettings *MainApplication::_gestureSettings()
+{
+    return (&m_GestureSettings);
+}
 // static
 MainApplication* MainApplication::instance()
 {
@@ -1018,6 +1023,7 @@ void MainApplication::loadSettings()
     qzSettings->loadSettings();
     userAgentManager()->loadSettings();
     networkManager()->loadSettings();
+    _gestureSettings()->loadSettings();
 }
 
 void MainApplication::loadTheme(const QString &name)

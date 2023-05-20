@@ -35,6 +35,7 @@
 #include "scripts.h"
 #include "webhittestresult.h"
 #include "webscrollbarmanager.h"
+#include "gesturesettings.h"
 
 #include <iostream>
 #include <cmath>
@@ -1098,7 +1099,7 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:
-        if(qzSettings->enableFingerScrolling) { // do not catch our fabricated event
+        if(gestureSettings->enableFingerScrolling) { // do not catch our fabricated event
         m_mouseTime = m_mouseTime.currentDateTime();
         m_mouseHeld = true;
         m_mousePos = event->globalPos();
@@ -1132,7 +1133,7 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:{
-        if(qzSettings->enableFingerScrolling) { // This code style is definitely not for such branching
+        if(gestureSettings->enableFingerScrolling) { // This code style is definitely not for such branching
             m_mouseHeld = false;
             qint64 deltaTime = m_mouseTime.currentDateTime().toMSecsSinceEpoch()-m_mouseTime.toMSecsSinceEpoch();
             if(m_mouseMoved)
@@ -1140,7 +1141,7 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
                 event->accept();
             }
             else if(!m_clickedUrl.isEmpty()) { // We did not scroll - send it to WebEngineView already
-                if(deltaTime>qzSettings->mouseDelay) { // long press = open context menu
+                if(deltaTime>gestureSettings->mouseDelay) { // long press = open context menu
                     QContextMenuEvent ev(QContextMenuEvent::Mouse, event->pos(), event->globalPos(), event->modifiers());
                     _contextMenuEvent(&ev);
                     event->accept();
@@ -1189,7 +1190,7 @@ void WebView::_mouseMoveEvent(QMouseEvent *event)
         }
         else {
             int deltaLen = sqrt(deltaPos.x()*deltaPos.x()+deltaPos.y()*deltaPos.y());
-            if(deltaLen>qzSettings->mouseThreshold)  {
+            if(deltaLen>gestureSettings->mouseThreshold)  {
                 m_mouseMoved = true;
             }
         }

@@ -263,6 +263,7 @@ set(SRCS ${SRCS}
     webengine/webview.cpp
     webengine/webscrollbar.cpp
     webengine/webscrollbarmanager.cpp
+    webengine/gesturesettings.cpp
     webtab/searchtoolbar.cpp
     webtab/tabbedwebview.cpp
     webtab/webtab.cpp
