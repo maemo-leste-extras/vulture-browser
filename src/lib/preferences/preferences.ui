@@ -1181,7 +1181,7 @@
                <item row="10" column="0">
                 <widget class="QLineEdit" name="mouseThreshold">
                  <property name="text">
-                  <string>200</string>
+                  <string>20</string>
                  </property>
                 </widget>
                </item>

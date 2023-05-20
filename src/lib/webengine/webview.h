@@ -171,6 +171,8 @@ protected:
     void checkForForm(QAction *action, const QPoint &pos);
     void createSearchEngine();
 
+    void mouseClick(const QPointF &localpos);
+
 private Q_SLOTS:
     void addSpeedDial();
     void configureSpeedDial();
@@ -196,10 +198,8 @@ private:
     WheelHelper m_wheelHelper;
 
     static bool s_forceContextMenuOnMouseRelease;
-
-    int mouseDelay;
-    int mouseThreshold;
    
+    bool m_mouseLocked;
     bool m_mouseHeld;
     bool m_mouseMoved;
     QPoint m_mouseStartPos;

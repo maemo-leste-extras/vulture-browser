@@ -27,6 +27,7 @@ WebHitTestResult::WebHitTestResult(const WebPage *page, const QPoint &pos)
     , m_mediaPaused(false)
     , m_mediaMuted(false)
     , m_pos(pos)
+    , m_id("")
 {
     QString source = QL1S("(function() {"
                           "var e = document.elementFromPoint(%1, %2);"
@@ -61,6 +62,7 @@ WebHitTestResult::WebHitTestResult(const WebPage *page, const QPoint &pos)
                           "    linkTitle: '',"
                           "    linkUrl: '',"
                           "    mediaUrl: '',"
+                          "    id: '',"
                           "    tagName: e.tagName.toLowerCase()"
                           "};"
                           "var r = e.getBoundingClientRect();"
@@ -81,6 +83,7 @@ WebHitTestResult::WebHitTestResult(const WebPage *page, const QPoint &pos)
                           "        res.mediaPaused = e.paused;"
                           "        res.mediaMuted = e.muted;"
                           "    }"
+                          "    if(e.id!='')res.id = e.id;"
                           "    e = e.parentElement;"
                           "}"
                           "return res;"
@@ -193,6 +196,11 @@ QString WebHitTestResult::tagName() const
     return m_tagName;
 }
 
+QString WebHitTestResult::id() const
+{
+    return m_id;
+}
+
 void WebHitTestResult::init(const QUrl &url, const QVariantMap &map)
 {
     if (map.isEmpty())
@@ -210,6 +218,7 @@ void WebHitTestResult::init(const QUrl &url, const QVariantMap &map)
     m_mediaPaused = map.value(QSL("mediaPaused")).toBool();
     m_mediaMuted = map.value(QSL("mediaMuted")).toBool();
     m_tagName = map.value(QSL("tagName")).toString();
+    m_id = map.value(QSL("id")).toString();
 
     const QVariantList &rect = map.value(QSL("boundingRect")).toList();
     if (rect.size() == 4)

@@ -51,7 +51,7 @@ public:
     QPoint pos() const;
     QPointF viewportPos() const;
     QString tagName() const;
-
+    QString id() const;
 private:
     void init(const QUrl &url, const QVariantMap &map);
 
@@ -70,6 +70,7 @@ private:
     QPoint m_pos;
     QPointF m_viewportPos;
     QString m_tagName;
+    QString m_id;
 };
 
 #endif // WEBHITTESTRESULT_H

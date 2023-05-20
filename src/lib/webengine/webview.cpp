@@ -66,6 +66,7 @@ WebView::WebView(QWidget* parent)
     , m_mouseMoved(false)
     , m_mousePos(0,0)
     , m_mouseStartPos(0,0)
+    , m_mouseLocked(false)
 {
     connect(this, &QWebEngineView::loadStarted, this, &WebView::slotLoadStarted);
     connect(this, &QWebEngineView::loadProgress, this, &WebView::slotLoadProgress);
@@ -1099,21 +1100,31 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         break;
 
     case Qt::LeftButton:
-        if(gestureSettings->enableFingerScrolling) { // do not catch our fabricated event
+        m_clickedUrl = page()->hitTestContent(event->pos()).linkUrl();
+        if(gestureSettings->enableFingerScrolling&&!m_mouseLocked) { // do not catch our fabricated event
         m_mouseTime = m_mouseTime.currentDateTime();
         m_mouseHeld = true;
         m_mousePos = event->globalPos();
         m_mouseStartPos = m_mousePos;
         event->accept();
         }
-        m_clickedUrl = page()->hitTestContent(event->pos()).linkUrl();
         break;
 
     default:
         break;
     }
 }
-
+void WebView::mouseClick(const QPointF &localPos)
+{
+    m_mouseLocked = true;
+    QMouseEvent newEvent = QMouseEvent(QEvent::MouseButtonPress,localPos,Qt::LeftButton,Qt::MouseButton::LeftButton,Qt::NoModifier);
+    QApplication::sendEvent(m_rwhvqt,&newEvent);
+    QTimer::singleShot(150, this, [this,localPos]() {
+    QMouseEvent releaseEvent = QMouseEvent(QEvent::MouseButtonRelease,localPos,Qt::LeftButton,Qt::MouseButton::NoButton,Qt::NoModifier);
+    QApplication::sendEvent(m_rwhvqt,&releaseEvent);
+    m_mouseLocked = false;
+    });
+}
 void WebView::_mouseReleaseEvent(QMouseEvent *event)
 {
     if (mApp->plugins()->processMouseRelease(Qz::ON_WebView, this, event)) {
@@ -1134,33 +1145,32 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
 
     case Qt::LeftButton:{
         if(gestureSettings->enableFingerScrolling) { // This code style is definitely not for such branching
+            if(m_mouseLocked)return;
             m_mouseHeld = false;
             qint64 deltaTime = m_mouseTime.currentDateTime().toMSecsSinceEpoch()-m_mouseTime.toMSecsSinceEpoch();
             if(m_mouseMoved)
             {
                 event->accept();
             }
-            else if(!m_clickedUrl.isEmpty()) { // We did not scroll - send it to WebEngineView already
+            else {
                 if(deltaTime>gestureSettings->mouseDelay) { // long press = open context menu
                     QContextMenuEvent ev(QContextMenuEvent::Mouse, event->pos(), event->globalPos(), event->modifiers());
                     _contextMenuEvent(&ev);
                     event->accept();
                 }
                 else {
-                    QMouseEvent newEvent = QMouseEvent(QEvent::MouseButtonPress,event->localPos(),event->screenPos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
-                    QMouseEvent releaseEvent = QMouseEvent(QEvent::MouseButtonRelease,event->localPos(),event->screenPos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
-                    page()->event(&newEvent);
-                    page()->event(&releaseEvent); // TODO: possibly may break some sites, delay needed
+                    mouseClick(event->localPos());
                     event->accept();
-                    setUrl(m_clickedUrl);
                 }
             }
         }
         else if (!m_clickedUrl.isEmpty()) {
             const QUrl link = page()->hitTestContent(event->pos()).linkUrl();
             if (m_clickedUrl == link && isUrlValid(link)) {
-                userDefinedOpenUrlInNewTab(link, event->modifiers() & Qt::ShiftModifier);
-                event->accept();
+                if (event->modifiers() & Qt::ControlModifier) {
+                    userDefinedOpenUrlInNewTab(link, event->modifiers() & Qt::ShiftModifier);
+                    event->accept();
+                }
             }
         }
         m_mouseMoved = false;
