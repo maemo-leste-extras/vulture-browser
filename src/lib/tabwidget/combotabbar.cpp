@@ -770,7 +770,7 @@ QSize ComboTabBar::closeButtonSize() const
 {
     int width = style()->pixelMetric(QStyle::PM_TabCloseIndicatorWidth, 0, this);
     int height = style()->pixelMetric(QStyle::PM_TabCloseIndicatorHeight, 0, this);
-    return QSize(width, height);
+    return QSize(qMax(width,int(m_mainTabBar->height()*0.86)),qMax(height,int(m_mainTabBar->height()*0.86)));
 }
 
 bool ComboTabBar::validIndex(int index) const
