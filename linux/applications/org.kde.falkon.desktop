@@ -251,4 +251,4 @@ Name[x-test]=xxStart private browsingxx
 Name[zh_CN]=启动隐身浏览
 Name[zh_TW]=開始隱私瀏覽
 Icon=view-private
-Exec=env QTWEBENGINE_DISABLE_SANDBOX=1 falkon --private-browsing
+Exec=env QTWEBENGINE_DISABLE_SANDBOX=1 QT_QPA_PLATFORM=maemo QT_IM_MODULE=him falkon --private-browsing
