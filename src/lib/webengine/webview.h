@@ -202,6 +202,7 @@ private:
     bool m_mouseLocked;
     bool m_mouseHeld;
     bool m_mouseMoved;
+    QString m_scrollId;
     QPoint m_mouseStartPos;
     QPoint m_mousePos;
     QDateTime m_mouseTime;

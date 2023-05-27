@@ -67,6 +67,7 @@ WebView::WebView(QWidget* parent)
     , m_mousePos(0,0)
     , m_mouseStartPos(0,0)
     , m_mouseLocked(false)
+    , m_scrollId("")
 {
     connect(this, &QWebEngineView::loadStarted, this, &WebView::slotLoadStarted);
     connect(this, &QWebEngineView::loadProgress, this, &WebView::slotLoadProgress);
@@ -1071,7 +1072,29 @@ void WebView::_wheelEvent(QWheelEvent *event)
         }
     }
 }
-
+QString getScrollable(WebPage*page,QPointF pos)
+{
+    static const QString code = QL1S(
+    "function isScrollable(element) {"
+    " var e = window.getComputedStyle(element);"
+    " return (e.overflow=='scroll'||e.overflow=='auto'||e.overflowY=='scroll'||e.overflowY=='auto');"
+    "}"
+    "(function()"
+    "{"
+    "var e = document.elementFromPoint(%1, %2);"
+    "if(!e)return null;"
+    "while (e) {"
+    "if(isScrollable(e))"
+    " {"
+    "   if(!e.id)e.id = 'id_vulture_browser_scroll'+Math.random().toString(5).slice(2);"
+    "   return e.id;"
+    " }"
+    "e = e.parentElement;"
+    "}"
+    "return null;"
+    "})()");
+    return page->execJavaScript(code.arg(pos.x()).arg(pos.y()),WebPage::SafeJsWorld).toString();
+}
 void WebView::_mousePressEvent(QMouseEvent *event)
 {
     m_clickedUrl = QUrl();
@@ -1106,6 +1129,8 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         m_mouseHeld = true;
         m_mousePos = event->globalPos();
         m_mouseStartPos = m_mousePos;
+        m_scrollId = getScrollable(page(),page()->mapToViewport(event->pos())).trimmed();
+        //if(!m_scrollId.isEmpty())std::cout<<"\nCaught scrollable:"<<m_scrollId.toStdString().c_str();
         event->accept();
         }
         break;
@@ -1195,7 +1220,12 @@ void WebView::_mouseMoveEvent(QMouseEvent *event)
     if (m_mouseHeld) {
         QPoint deltaPos(m_mousePos-event->globalPos());
         if(m_mouseMoved) {
-            page()->scroll(deltaPos.x(),deltaPos.y());
+            if(!m_scrollId.isEmpty())
+            {
+            QString code = "var e = document.getElementById('%1');e.scrollTo(e.scrollLeft+(%2),e.scrollTop+(%3));";
+page()->runJavaScript(code.arg(m_scrollId).arg(deltaPos.x()).arg(deltaPos.y()),WebPage::SafeJsWorld);
+            }
+            else page()->scroll(deltaPos.x(),deltaPos.y());
             m_mousePos = event->globalPos();
         }
         else {
