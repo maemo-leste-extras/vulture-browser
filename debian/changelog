@@ -1,3 +1,9 @@
+vulture-browser (23.04.1-1) unstable; urgency=low
+
+ * Allow finger scrolling for web page elements
+
+-- le0nklcpp le0nklcpp@gmail.com Sat 28 May 2023 01:45:00 +0300
+
 vulture-browser (23.04.1) unstable; urgency=low
 
  * Fix some items on web page were not clickable
@@ -7,6 +13,7 @@ vulture-browser (23.04.1) unstable; urgency=low
  * Move gestures settings to dedicated class
 
 -- le0nklcpp le0nklcpp@gmail.com Sat 20 May 2023 18:13:00 +0300
+
 vulture-browser (23.04.0-1) unstable; urgency=low
 
  * Added finger scrolling settings
