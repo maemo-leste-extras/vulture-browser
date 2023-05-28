@@ -25,7 +25,7 @@
 
 UserAgentManager::UserAgentManager(QObject* parent)
     : QObject(parent)
-    , m_usePerDomainUserAgent(false), m_defaultUserAgent("Opera/9.80 (Android; Opera Mini/36.2.2254/119.132; U) Presto/2.12.423 Version/12.16")
+    , m_usePerDomainUserAgent(false), m_defaultUserAgent("Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/113.0 Firefox/113.0")
 {
 }
 

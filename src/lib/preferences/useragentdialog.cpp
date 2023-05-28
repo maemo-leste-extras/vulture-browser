@@ -49,7 +49,7 @@ UserAgentDialog::UserAgentDialog(QWidget* parent)
     QRegularExpression chromeRx(QSL("Chrome/([^\\s]+)"));
     const QString chromeVersion = chromeRx.match(m_manager->defaultUserAgent()).captured(1);
     // our little potato is not ready for desktop view
-    m_knownUserAgents << QString("Opera/9.80 (Android; Opera Mini/36.2.2254/119.132; U) Presto/2.12.423 Version/12.16")
+    m_knownUserAgents << QString("Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/113.0 Firefox/113.0")
                       << QString("Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Mobile Safari/537.36")
                       << QString("Mozilla/5.0 (%1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/%2 Safari/537.36").arg(os, chromeVersion)
                       << QString("Mozilla/5.0 (%1) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12").arg(os)
