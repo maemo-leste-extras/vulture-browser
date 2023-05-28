@@ -34,7 +34,7 @@ if (UNIX AND NOT APPLE)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/falkon)
     ecm_install_po_files_as_qm(${CMAKE_SOURCE_DIR}/poqm)
 
-    install(PROGRAMS ../../linux/applications/org.kde.falkon.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+    install(PROGRAMS ../../linux/applications/org.kde.falkon.desktop DESTINATION /usr/share/applications/hildon)
 
     ecm_install_icons(ICONS
         ../../linux/hicolor/16-apps-falkon.png

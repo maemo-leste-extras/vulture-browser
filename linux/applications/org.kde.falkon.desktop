@@ -119,7 +119,7 @@ GenericName[uk]=Переглядач інтернету
 GenericName[x-test]=xxWeb Browserxx
 GenericName[zh_CN]=网页浏览器
 GenericName[zh_TW]=網路瀏覽器
-Exec=falkon %u
+Exec=env QT_INPUT_METHOD=qtvirtualkeyboard QT_QPA_PLATFORM=maemo falkon %u
 StartupWMClass=Falkon
 MimeType=text/html;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;application/x-mimearchive;
 Terminal=false
@@ -251,4 +251,4 @@ Name[x-test]=xxStart private browsingxx
 Name[zh_CN]=启动隐身浏览
 Name[zh_TW]=開始隱私瀏覽
 Icon=view-private
-Exec=env QTWEBENGINE_DISABLE_SANDBOX=1 QT_QPA_PLATFORM=maemo QT_IM_MODULE=him falkon --private-browsing
+Exec=falkon --private-browsing
