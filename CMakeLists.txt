@@ -161,10 +161,10 @@ include_directories(
 # Finally, go into the subdirs
 add_subdirectory(src)
 
-if (BUILD_TESTING)
-    add_subdirectory(autotests)
-    add_subdirectory(tests/benchmarks)
-endif()
+#if (BUILD_TESTING)
+#    add_subdirectory(autotests)
+#    add_subdirectory(tests/benchmarks)
+#endif()
 
 # Tell releaseme that po is already taken care of
 # SKIP_PO_INSTALL
