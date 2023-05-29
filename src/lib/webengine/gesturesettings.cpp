@@ -6,5 +6,7 @@ void GestureSettings::loadSettings()
     mouseDelay = settings.value("mouseDelay",210).toInt();
     mouseThreshold = settings.value("mouseThreshold",20).toInt();
     enableFingerScrolling = settings.value("enableFingerScrolling",true).toBool();
+    scrollPageOnly = settings.value("scrollPageOnly",false).toBool();
+    contextMenuOnLongPress = settings.value("contextMenuOnLongPress",true).toBool();
     settings.endGroup();
 }

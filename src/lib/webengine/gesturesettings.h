@@ -9,6 +9,8 @@ class FALKON_EXPORT GestureSettings
  int mouseDelay;
  int mouseThreshold;
  bool enableFingerScrolling;
+ bool scrollPageOnly;
+ bool contextMenuOnLongPress;
 };
 
 #define gestureSettings mApp->_gestureSettings()

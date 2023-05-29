@@ -1129,7 +1129,7 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         m_mouseHeld = true;
         m_mousePos = event->globalPos();
         m_mouseStartPos = m_mousePos;
-        m_scrollId = getScrollable(page(),page()->mapToViewport(event->pos())).trimmed();
+        if(!gestureSettings->scrollPageOnly)m_scrollId = getScrollable(page(),page()->mapToViewport(event->pos())).trimmed();
         //if(!m_scrollId.isEmpty())std::cout<<"\nCaught scrollable:"<<m_scrollId.toStdString().c_str();
         event->accept();
         }
@@ -1179,8 +1179,10 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
             }
             else {
                 if(deltaTime>gestureSettings->mouseDelay) { // long press = open context menu
-                    QContextMenuEvent ev(QContextMenuEvent::Mouse, event->pos(), event->globalPos(), event->modifiers());
-                    _contextMenuEvent(&ev);
+                    if(gestureSettings->contextMenuOnLongPress)   {
+                       QContextMenuEvent ev(QContextMenuEvent::Mouse, event->pos(), event->globalPos(), event->modifiers());
+                       _contextMenuEvent(&ev);
+                       }
                     event->accept();
                 }
                 else {
@@ -1220,7 +1222,7 @@ void WebView::_mouseMoveEvent(QMouseEvent *event)
     if (m_mouseHeld) {
         QPoint deltaPos(m_mousePos-event->globalPos());
         if(m_mouseMoved) {
-            if(!m_scrollId.isEmpty())
+            if(!gestureSettings->scrollPageOnly&&!m_scrollId.isEmpty())
             {
             QString code = "var e = document.getElementById('%1');e.scrollTo(e.scrollLeft+(%2),e.scrollTop+(%3));";
 page()->runJavaScript(code.arg(m_scrollId).arg(deltaPos.x()).arg(deltaPos.y()),WebPage::SafeJsWorld);
