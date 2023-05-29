@@ -297,7 +297,7 @@ Preferences::Preferences(BrowserWindow* window)
     ui->enableFingerScrolling->setChecked(settings.value("enableFingerScrolling",true).toBool());
     ui->mouseDelay->setText(settings.value("mouseDelay",210).toString());
     ui->mouseThreshold->setText(settings.value("mouseThreshold",20).toString());
-    ui->scrollPageOnly->setChecked(settings.value("scrollPageOnly",false).toBool());
+    ui->scrollPageOnly->setChecked(settings.value("scrollPageOnly",true).toBool());
     ui->longPressMenu->setChecked(settings.value("contextMenuOnLongPress",true).toBool());
     const auto levels = WebView::zoomLevels();
     for (int level : levels) {
