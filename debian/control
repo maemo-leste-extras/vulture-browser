@@ -3,7 +3,6 @@ Section: user/network
 Priority: extra
 Maintainer: le0nklcpp <le0nklcpp@gmail.com>
 Build-Depends: debhelper-compat (=13), cdbs,
- maemo-system-services-dev,
  cmake (>= 3.1),
  extra-cmake-modules (>= 5.27.0),
  libjs-jquery,
@@ -37,39 +36,3 @@ Provides: www-browser
 Priority: optional
 Description: Fork of Falkon browser that has KDE bloatware removed
  Port of Falkon for Maemo Leste containing some patches
-
-XB-Maemo-Display-Name: vulture-browser
-XB-Maemo-Icon-26: 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
