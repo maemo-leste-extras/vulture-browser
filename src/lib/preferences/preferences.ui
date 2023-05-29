@@ -144,9 +144,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-257</y>
+        <y>-221</y>
         <width>604</width>
-        <height>704</height>
+        <height>733</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1100,6 +1100,13 @@
                   <widget class="QCheckBox" name="hardwareAccel">
                    <property name="text">
                     <string>Use hardware acceleration (requires restart)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="mobileGPU">
+                   <property name="text">
+                    <string>Mobile GPU</string>
                    </property>
                   </widget>
                  </item>
