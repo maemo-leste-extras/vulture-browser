@@ -1146,8 +1146,8 @@ void WebView::mouseClick(const QPointF &localPos)
     QApplication::sendEvent(m_rwhvqt,&newEvent);
     QTimer::singleShot(150, this, [this,localPos]() {
     QMouseEvent releaseEvent = QMouseEvent(QEvent::MouseButtonRelease,localPos,Qt::LeftButton,Qt::MouseButton::NoButton,Qt::NoModifier);
-    QApplication::sendEvent(m_rwhvqt,&releaseEvent);
-    m_mouseLocked = false;
+    QApplication::sendEvent(this->m_rwhvqt,&releaseEvent);
+    this->m_mouseLocked = false;
     });
 }
 void WebView::_mouseReleaseEvent(QMouseEvent *event)
