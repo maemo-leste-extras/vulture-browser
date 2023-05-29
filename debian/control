@@ -29,6 +29,16 @@ Vcs-Browser: https://github.com/maemo-leste-extras/vulture-browser/
 Package: vulture-browser
 Version: 23.04.4
 Architecture: any
+Depends: libqt5sql5-sqlite, qml-module-qtwebengine, libc6 (>= 2.28), libgcc-s1 (>= 3.5), libqt5core5a (>= 5.15), libqt5dbus5 (>= 5.0), libqt5gui5 (>= 5.14) | libqt5gui5-gles (>= 5.14), libqt5network5 (>= 5.0), libqt5printsupport5 (>= 5.0), libqt5qml5 (>= 5.1), libqt5quickwidgets5 (>= 5.4), libqt5sql5 (>= 5.3), libqt5webchannel5 (>= 5.6), libqt5webenginecore5 (>= 5.12), libqt5webenginewidgets5 (>= 5.14), libqt5widgets5 (>= 5.15), libqt5x11extras5 (>= 5.6), libssl1.1 (>= 1.1), libstdc++6 (>= 5), libxcb1
+Suggests: qtwebengine5-dev-tools
+Conflicts: falkon
+Replaces: falkon
+Provides: www-browser
+Priority: optional
+Description: Fork of Falkon browser that has KDE bloatware removed
+ Port of Falkon for Maemo Leste containing some patches
+
+XB-Maemo-Display-Name: vulture-browser
 XB-Maemo-Icon-26: iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAIAAAAmKNuZAAABhWlDQ1BJQ0MgcHJv
  ZmlsZQAAKJF9kT1Iw0AcxV9bS0UqIhYRUchQnSyIijhqFYpQIdQKrTqYXPoFTRqS
  FBdHwbXg4Mdi1cHFWVcHV0EQ/ABxdXFSdJES/5cUWsR4cNyPd/ced+8Af73MVLNj
@@ -63,12 +73,3 @@ XB-Maemo-Icon-26: iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAIAAAAmKNuZAAABhWlDQ1BJQ0MgcH
  OzrQHu55NRR0ly1EXG0BABKkt3FmJnvoyOHV+7R6kez72lZ9JVY5VK1WAYCZ18dl
  baVSmZycvHnrxqEjB9Y1c163FooEklu6u9OXLl3auHFTPN7guq5SCgCMMb7vF4vF
  6enp3t7eZ/wxjoyMWGsRkUjt3bsH/s/xN7L5EvAlhmJeAAAAAElFTkSuQmCC
-
-Depends: libqt5sql5-sqlite, qml-module-qtwebengine, libc6 (>= 2.28), libgcc-s1 (>= 3.5), libqt5core5a (>= 5.15), libqt5dbus5 (>= 5.0), libqt5gui5 (>= 5.14) | libqt5gui5-gles (>= 5.14), libqt5network5 (>= 5.0), libqt5printsupport5 (>= 5.0), libqt5qml5 (>= 5.1), libqt5quickwidgets5 (>= 5.4), libqt5sql5 (>= 5.3), libqt5webchannel5 (>= 5.6), libqt5webenginecore5 (>= 5.12), libqt5webenginewidgets5 (>= 5.14), libqt5widgets5 (>= 5.15), libqt5x11extras5 (>= 5.6), libssl1.1 (>= 1.1), libstdc++6 (>= 5), libxcb1
-Suggests: qtwebengine5-dev-tools
-Conflicts: falkon
-Replaces: falkon
-Provides: www-browser
-Priority: optional
-Description: Fork of Falkon browser that has KDE bloatware removed
- Port of Falkon for Maemo Leste containing some patches
