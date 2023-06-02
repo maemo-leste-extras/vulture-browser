@@ -119,7 +119,7 @@ GenericName[uk]=Переглядач інтернету
 GenericName[x-test]=xxWeb Browserxx
 GenericName[zh_CN]=网页浏览器
 GenericName[zh_TW]=網路瀏覽器
-Exec=env QT_INPUT_METHOD=qtvirtualkeyboard QT_QPA_PLATFORM=maemo falkon %u
+Exec=env QT_IM_MODULE=qtvirtualkeyboard QT_QPA_PLATFORM=maemo falkon %u
 StartupWMClass=Falkon
 MimeType=text/html;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;application/x-mimearchive;
 Terminal=false
@@ -166,7 +166,7 @@ Name[x-test]=xxOpen new tabxx
 Name[zh_CN]=新建标签页
 Name[zh_TW]=開啟新分頁
 Icon=tab-new
-Exec=falkon --new-tab
+Exec=env QT_IM_MODULE=qtvirtualkeyboard QT_QPA_PLATFORM=maemo falkon --new-tab
 
 [Desktop Action NewWindow]
 Name=Open new window
@@ -209,7 +209,7 @@ Name[x-test]=xxOpen new windowxx
 Name[zh_CN]=打开新窗口
 Name[zh_TW]=開啟新視窗
 Icon=window-new
-Exec=falkon --new-window
+Exec=env QT_IM_MODULE=qtvirtualkeyboard QT_QPA_PLATFORM=maemo falkon --new-window
 
 [Desktop Action PrivateBrowsing]
 Name=Start private browsing
@@ -251,4 +251,4 @@ Name[x-test]=xxStart private browsingxx
 Name[zh_CN]=启动隐身浏览
 Name[zh_TW]=開始隱私瀏覽
 Icon=view-private
-Exec=falkon --private-browsing
+Exec=env QT_IM_MODULE=qtvirtualkeyboard QT_QPA_PLATFORM=maemo falkon --private-browsing
