@@ -172,6 +172,7 @@ protected:
     void createSearchEngine();
 
     void mouseClick(const QPointF &localpos);
+    void mouseRelease(const QPointF &localpos);
 
 private Q_SLOTS:
     void addSpeedDial();
