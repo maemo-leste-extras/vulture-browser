@@ -296,9 +296,11 @@ Preferences::Preferences(BrowserWindow* window)
     ui->mobileGPU->setChecked(settings.value("mobileGPU",true).toBool());
     ui->enableFingerScrolling->setChecked(settings.value("enableFingerScrolling",true).toBool());
     ui->mouseDelay->setText(settings.value("mouseDelay",210).toString());
+    ui->tapZoomMax->setText(settings.value("tapZoomMax",200).toString());
     ui->mouseThreshold->setText(settings.value("mouseThreshold",20).toString());
     ui->scrollPageOnly->setChecked(settings.value("scrollPageOnly",true).toBool());
     ui->longPressMenu->setChecked(settings.value("contextMenuOnLongPress",true).toBool());
+    ui->doubleTapZoom->setChecked(settings.value("doubleTapZoom",true).toBool());
     const auto levels = WebView::zoomLevels();
     for (int level : levels) {
         ui->defaultZoomLevel->addItem(tr("%1%").arg(QString::number(level)));
@@ -548,6 +550,7 @@ Preferences::Preferences(BrowserWindow* window)
 
     ui->mouseThreshold->setValidator(new QIntValidator(0, 9000, this));
     ui->mouseDelay->setValidator(new QIntValidator(0, 9000, this));
+    ui->tapZoomMax->setValidator(new QIntValidator(0, 300, this));
 }
 
 void Preferences::allowPluginsToggled(bool checked)
@@ -981,9 +984,11 @@ void Preferences::saveSettings()
     settings.setValue("mobileGPU", ui->mobileGPU->isChecked());
     settings.setValue("enableFingerScrolling",ui->enableFingerScrolling->isChecked());
     settings.setValue("mouseDelay", ui->mouseDelay->text().toInt());
+    settings.setValue("tapZoomMax", ui->tapZoomMax->text().toInt());
     settings.setValue("mouseThreshold", ui->mouseThreshold->text().toInt());
     settings.setValue("scrollPageOnly",ui->scrollPageOnly->isChecked());
     settings.setValue("contextMenuOnLongPress",ui->longPressMenu->isChecked());
+    settings.setValue("doubleTapZoom",ui->doubleTapZoom->isChecked());
 #ifdef Q_OS_WIN
     settings.setValue("CheckDefaultBrowser", ui->checkDefaultBrowser->isChecked());
 #endif

@@ -157,7 +157,7 @@ protected:
     virtual void _keyPressEvent(QKeyEvent *event);
     virtual void _keyReleaseEvent(QKeyEvent *event);
     virtual void _contextMenuEvent(QContextMenuEvent *event);
-
+    virtual void mouseDoubleClickEvent(QMouseEvent*event);
     void loadRequest(const LoadRequest &req);
     void applyZoom();
 
@@ -173,7 +173,7 @@ protected:
 
     void mouseClick(const QPointF &localpos);
     void mouseRelease(const QPointF &localpos);
-
+    void zoomTap();
 private Q_SLOTS:
     void addSpeedDial();
     void configureSpeedDial();

@@ -1130,7 +1130,6 @@ void WebView::_mousePressEvent(QMouseEvent *event)
         m_mousePos = event->globalPos();
         m_mouseStartPos = m_mousePos;
         if(!gestureSettings->scrollPageOnly)m_scrollId = getScrollable(page(),page()->mapToViewport(event->pos())).trimmed();
-        //if(!m_scrollId.isEmpty())std::cout<<"\nCaught scrollable:"<<m_scrollId.toStdString().c_str();
         event->accept();
         }
         break;
@@ -1148,7 +1147,7 @@ void WebView::mouseClick(const QPointF &localPos)
 }
 void WebView::mouseRelease(const QPointF &localPos)
 {
-    QTimer::singleShot(150, this, [this,localPos]() {
+    QTimer::singleShot(85, this, [this,localPos]() {
     if(this->m_rwhvqt)  {
         QMouseEvent releaseEvent = QMouseEvent(QEvent::MouseButtonRelease,localPos,Qt::LeftButton,Qt::MouseButton::NoButton,Qt::NoModifier);
         QApplication::sendEvent(this->m_rwhvqt,&releaseEvent);
@@ -1156,6 +1155,14 @@ void WebView::mouseRelease(const QPointF &localPos)
     }
     else this->mouseRelease(localPos);
     });
+}
+void WebView::zoomTap()
+{
+    if (m_currentZoomLevel < (zoomLevels().count()-1)&&zoomLevels().at(m_currentZoomLevel)<gestureSettings->tapZoomMax) {
+        m_currentZoomLevel++;
+    }
+    else m_currentZoomLevel = qzSettings->defaultZoomLevel;
+    applyZoom();
 }
 void WebView::_mouseReleaseEvent(QMouseEvent *event)
 {
@@ -1247,6 +1254,15 @@ page()->runJavaScript(code.arg(m_scrollId).arg(deltaPos.x()).arg(deltaPos.y()),W
     }
     if (mApp->plugins()->processMouseMove(Qz::ON_WebView, this, event)) {
         event->accept();
+    }
+}
+
+void WebView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(gestureSettings->doubleTapZoom)
+    {
+       zoomTap();
+       event->accept();
     }
 }
 
@@ -1401,7 +1417,8 @@ bool WebView::eventFilter(QObject *obj, QEvent *event)
 
         case QEvent::Wheel:
             HANDLE_EVENT(_wheelEvent, QWheelEvent);
-
+        case QEvent::MouseButtonDblClick:
+            HANDLE_EVENT(mouseDoubleClickEvent,QMouseEvent);
         default:
             break;
         }
@@ -1430,6 +1447,7 @@ bool WebView::eventFilter(QObject *obj, QEvent *event)
         case QEvent::MouseButtonRelease:
         case QEvent::MouseMove:
         case QEvent::Wheel:
+        case QEvent::MouseButtonDblClick:
             return true;
 
         case QEvent::Hide:

@@ -11,6 +11,8 @@ class FALKON_EXPORT GestureSettings
  bool enableFingerScrolling;
  bool scrollPageOnly;
  bool contextMenuOnLongPress;
+ bool doubleTapZoom;
+ int tapZoomMax;
 };
 
 #define gestureSettings mApp->_gestureSettings()
