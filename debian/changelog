@@ -1,3 +1,9 @@
+vulture-browser (23.06.10) unstable; urgency=low
+  * Fix crash on scrolling <select> item
+  * Fix execution parameters in desktop file
+  * Add zoom on double tap
+
+-- le0nklcpp le0nklcpp@gmail.com Sat 10 Jun 2023 17:24:00 +0300
 vulture-browser (23.04.4) unstable; urgency=low
 
   * Partially fix crash on scrolling <select> item
