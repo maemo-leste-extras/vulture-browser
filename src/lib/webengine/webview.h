@@ -206,7 +206,7 @@ private:
     QString m_scrollId;
     QPoint m_mouseStartPos;
     QPoint m_mousePos;
-    QDateTime m_mouseTime;
+    qint64 m_mouseTime;
 };
 
 #endif // WEBVIEW_H

@@ -1125,7 +1125,7 @@ void WebView::_mousePressEvent(QMouseEvent *event)
     case Qt::LeftButton:
         m_clickedUrl = page()->hitTestContent(event->pos()).linkUrl();
         if(gestureSettings->enableFingerScrolling&&!m_mouseLocked) { // do not catch our fabricated event
-        m_mouseTime = m_mouseTime.currentDateTime();
+        m_mouseTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
         m_mouseHeld = true;
         m_mousePos = event->globalPos();
         m_mouseStartPos = m_mousePos;
@@ -1186,7 +1186,7 @@ void WebView::_mouseReleaseEvent(QMouseEvent *event)
         if(gestureSettings->enableFingerScrolling) { // This code style is definitely not for such branching
             if(m_mouseLocked)return;
             m_mouseHeld = false;
-            qint64 deltaTime = m_mouseTime.currentDateTime().toMSecsSinceEpoch()-m_mouseTime.toMSecsSinceEpoch();
+            qint64 deltaTime = QDateTime::currentDateTime().toMSecsSinceEpoch()-m_mouseTime;
             if(m_mouseMoved)
             {
                 event->accept();
