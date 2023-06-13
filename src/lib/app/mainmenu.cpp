@@ -79,6 +79,7 @@ void MainMenu::initSuperMenu(QMenu* superMenu) const
     superMenu->addAction(m_actions[QSL("File/NewWindow")]);
     superMenu->addAction(m_actions[QSL("File/NewPrivateWindow")]);
     superMenu->addAction(m_actions[QSL("File/OpenFile")]);
+    superMenu->addAction(m_actions[QSL("Standard/Preferences")]);
     if (mApp->sessionManager()) {
         superMenu->addSeparator();
         auto* sessionsSubmenu = new QMenu(tr("Sessions"));
@@ -102,7 +103,6 @@ void MainMenu::initSuperMenu(QMenu* superMenu) const
     superMenu->addMenu(m_menuTools);
     superMenu->addMenu(m_menuHelp);
     superMenu->addSeparator();
-    superMenu->addAction(m_actions[QSL("Standard/Preferences")]);
     superMenu->addAction(m_actions[QSL("Standard/About")]);
     superMenu->addSeparator();
     superMenu->addAction(m_actions[QSL("Standard/Quit")]);
