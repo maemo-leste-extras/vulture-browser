@@ -618,7 +618,7 @@ void BrowserWindow::loadSettings()
     menuBar()->setVisible(!isFullScreen() && showMenuBar);
 #endif
 
-    m_navigationToolbar->setSuperMenuVisible(isFullScreen() || !showMenuBar);
+    m_navigationToolbar->setSuperMenuVisible(isFullScreen()/* || !showMenuBar*/);
 }
 void BrowserWindow::goForward()
 {
