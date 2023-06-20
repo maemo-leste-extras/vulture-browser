@@ -1,6 +1,7 @@
 # CMake version required. This must be the very first line, because it sets default policies affecting everything else
 cmake_minimum_required(VERSION 3.18)
 set(CMAKE_CXX_FLAGS "-O3 -ffast-math -fomit-frame-pointer")
+add_definitions(-DMAEMO)
 # KDE Gear Version, managed by release script
 set(RELEASE_SERVICE_VERSION_MAJOR "23")
 set(RELEASE_SERVICE_VERSION_MINOR "07")
