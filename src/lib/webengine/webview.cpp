@@ -75,7 +75,7 @@ WebView::WebView(QWidget* parent)
     connect(this, &QWebEngineView::iconChanged, this, &WebView::slotIconChanged);
     connect(this, &QWebEngineView::urlChanged, this, &WebView::slotUrlChanged);
     connect(this, &QWebEngineView::titleChanged, this, &WebView::slotTitleChanged);
-
+    grabGesture(Qt::PinchGesture);
     m_currentZoomLevel = zoomLevels().indexOf(100);
 
     setAcceptDrops(true);
@@ -1361,7 +1361,28 @@ void WebView::contextMenuEvent(QContextMenuEvent *event)
         _contextMenuEvent(&ev);
     });
 }
-
+void WebView::gestureEvent(QGestureEvent*event)
+{
+    qWarning()<<"Gesture event detected!";
+    QGesture *gesture = event->gesture(Qt::PinchGesture);
+    if(!gesture)return;
+    QPinchGesture *pinch = static_cast<QPinchGesture*>(gesture);
+    qreal scale = pinch->totalScaleFactor()*zoomFactor();
+    qWarning()<<"Page scale:"<<scale;
+    setZoomFactor(scale);
+    int delta = 1000;
+    int closest = 0;
+    for(int i=0;i<zoomLevels().count();i++)
+    {
+        int diff = abs(zoomLevels().at(i)-scale*100);
+        if(diff<delta)
+         {
+            delta = diff;
+            closest = i;
+         }
+    }
+    m_currentZoomLevel = closest;
+}
 bool WebView::focusNextPrevChild(bool next)
 {
     return QWebEngineView::focusNextPrevChild(next);
@@ -1419,6 +1440,8 @@ bool WebView::eventFilter(QObject *obj, QEvent *event)
             HANDLE_EVENT(_wheelEvent, QWheelEvent);
         case QEvent::MouseButtonDblClick:
             HANDLE_EVENT(mouseDoubleClickEvent,QMouseEvent);
+        case QEvent::Gesture:
+            HANDLE_EVENT(gestureEvent,QGestureEvent);
         default:
             break;
         }
@@ -1448,6 +1471,7 @@ bool WebView::eventFilter(QObject *obj, QEvent *event)
         case QEvent::MouseMove:
         case QEvent::Wheel:
         case QEvent::MouseButtonDblClick:
+        case QEvent::Gesture:
             return true;
 
         case QEvent::Hide:

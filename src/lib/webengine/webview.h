@@ -22,6 +22,7 @@
 #include <QWebEngineView>
 
 #include <QDateTime>
+#include <QGestureEvent>
 
 #include "qzcommon.h"
 #include "loadrequest.h"
@@ -157,7 +158,8 @@ protected:
     virtual void _keyPressEvent(QKeyEvent *event);
     virtual void _keyReleaseEvent(QKeyEvent *event);
     virtual void _contextMenuEvent(QContextMenuEvent *event);
-    virtual void mouseDoubleClickEvent(QMouseEvent*event);
+    void mouseDoubleClickEvent(QMouseEvent*event) override;
+    void gestureEvent(QGestureEvent*event);
     void loadRequest(const LoadRequest &req);
     void applyZoom();
 
