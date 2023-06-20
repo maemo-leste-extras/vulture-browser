@@ -203,7 +203,9 @@ BrowserWindow::BrowserWindow(Qz::BrowserWindowType type, const QUrl &startUrl)
     setObjectName(QSL("mainwindow"));
     setWindowTitle(tr("Falkon"));
     setProperty("private", mApp->isPrivate());
-
+    #ifdef MAEMO
+    setProperty("X-Maemo-StackedWindow",1);
+    #endif
     setupUi();
     setupMenu();
 

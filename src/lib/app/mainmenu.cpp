@@ -64,6 +64,7 @@ void MainMenu::setWindow(BrowserWindow* window)
 
 void MainMenu::initMenuBar(QMenuBar* menuBar) const
 {
+    #ifndef MAEMO
     menuBar->addMenu(m_menuFile);
     menuBar->addMenu(m_menuEdit);
     menuBar->addMenu(m_menuView);
@@ -71,6 +72,9 @@ void MainMenu::initMenuBar(QMenuBar* menuBar) const
     menuBar->addMenu(m_menuBookmarks);
     menuBar->addMenu(m_menuTools);
     menuBar->addMenu(m_menuHelp);
+    #else
+    initSuperMenu(menuBar->addMenu(tr("&menu")));
+    #endif
 }
 
 void MainMenu::initSuperMenu(QMenu* superMenu) const
@@ -78,8 +82,11 @@ void MainMenu::initSuperMenu(QMenu* superMenu) const
     superMenu->addAction(m_actions[QSL("File/NewTab")]);
     superMenu->addAction(m_actions[QSL("File/NewWindow")]);
     superMenu->addAction(m_actions[QSL("File/NewPrivateWindow")]);
+    #ifndef MAEMO
     superMenu->addAction(m_actions[QSL("File/OpenFile")]);
+    #endif
     superMenu->addAction(m_actions[QSL("Standard/Preferences")]);
+    #ifndef MAEMO
     if (mApp->sessionManager()) {
         superMenu->addSeparator();
         auto* sessionsSubmenu = new QMenu(tr("Sessions"));
@@ -90,6 +97,7 @@ void MainMenu::initSuperMenu(QMenu* superMenu) const
     superMenu->addSeparator();
     superMenu->addAction(m_actions[QSL("File/SendLink")]);
     superMenu->addAction(m_actions[QSL("File/Print")]);
+    #endif
     superMenu->addSeparator();
     superMenu->addAction(m_actions[QSL("Edit/SelectAll")]);
     superMenu->addAction(m_actions[QSL("Edit/Find")]);
@@ -97,12 +105,17 @@ void MainMenu::initSuperMenu(QMenu* superMenu) const
     superMenu->addAction(m_menuHistory->actions().at(3));
     superMenu->addAction(m_menuBookmarks->actions().at(2));
     superMenu->addSeparator();
+    #ifndef MAEMO
     superMenu->addMenu(m_menuView);
     superMenu->addMenu(m_menuHistory);
+    #endif
     superMenu->addMenu(m_menuBookmarks);
+    #ifndef MAEMO
     superMenu->addMenu(m_menuTools);
     superMenu->addMenu(m_menuHelp);
+    #endif
     superMenu->addSeparator();
+    superMenu->addAction(m_actions[QSL("Help/AboutQt")]);
     superMenu->addAction(m_actions[QSL("Standard/About")]);
     superMenu->addSeparator();
     superMenu->addAction(m_actions[QSL("Standard/Quit")]);

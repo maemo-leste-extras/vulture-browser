@@ -25,7 +25,6 @@ MenuBar::MenuBar(BrowserWindow* parent)
     setObjectName("mainwindow-menubar");
     setCursor(Qt::ArrowCursor);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    setNativeMenuBar(true);
     connect(this, &QWidget::customContextMenuRequested,
             this, &MenuBar::contextMenuRequested);
 }
