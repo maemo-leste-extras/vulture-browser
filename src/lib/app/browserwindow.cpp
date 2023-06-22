@@ -201,7 +201,7 @@ BrowserWindow::BrowserWindow(Qz::BrowserWindowType type, const QUrl &startUrl)
     setAttribute(Qt::WA_DontCreateNativeAncestors);
 
     setObjectName(QSL("mainwindow"));
-    setWindowTitle(tr("Falkon"));
+    setWindowTitle(tr(Qz::APPNAME));
     setProperty("private", mApp->isPrivate());
     #ifdef MAEMO
     setProperty("X-Maemo-StackedWindow",1);
@@ -219,10 +219,10 @@ BrowserWindow::BrowserWindow(Qz::BrowserWindowType type, const QUrl &startUrl)
     QTimer::singleShot(0, this, &BrowserWindow::postLaunch);
 
     if (mApp->isPrivate()) {
-        QzTools::setWmClass(QSL("Falkon Browser (Private Window)"), this);
+        QzTools::setWmClass(QString("%1 (Private Window)").arg(Qz::APPNAME), this);
     }
     else {
-        QzTools::setWmClass(QSL("Falkon Browser"), this);
+        QzTools::setWmClass(QString(Qz::APPNAME), this);
     }
 }
 
@@ -977,9 +977,9 @@ void BrowserWindow::currentTabChanged()
 
     const QString title = view->webTab()->title(/*allowEmpty*/true);
     if (title.isEmpty()) {
-        setWindowTitle(tr("Falkon"));
+        setWindowTitle(tr(Qz::APPNAME));
     } else {
-        setWindowTitle(tr("%1 - Falkon").arg(title));
+        setWindowTitle(tr("%1 - %2").arg(title,Qz::APPNAME));
     }
     m_ipLabel->setText(view->getIp());
     view->setFocus();

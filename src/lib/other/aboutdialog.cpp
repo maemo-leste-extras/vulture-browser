@@ -48,6 +48,7 @@ void AboutDialog::showAbout()
 {
     QString aboutHtml;
     aboutHtml += "<div style='margin:0px 20px;'>";
+    aboutHtml += tr("<p>%1</p>").arg(Qz::APPNAME);
     aboutHtml += tr("<p><b>Application version %1</b><br/>").arg(
 #ifdef FALKON_GIT_REVISION
                        QString("%1 (%2)").arg(Qz::VERSION, FALKON_GIT_REVISION)
