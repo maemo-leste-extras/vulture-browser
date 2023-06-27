@@ -617,7 +617,11 @@ void BrowserWindow::loadSettings()
 
 #ifndef Q_OS_MACOS
     m_menuBarVisible = showMenuBar;
+#ifdef MAEMO
+    menuBar()->setVisible(false);
+#else
     menuBar()->setVisible(!isFullScreen() && showMenuBar);
+#endif
 #endif
 
     //m_navigationToolbar->setSuperMenuVisible(isFullScreen() || !showMenuBar);
@@ -862,7 +866,7 @@ void BrowserWindow::toggleShowMenubar()
 #endif
 
     setUpdatesEnabled(false);
-
+#ifndef MAEMO
     menuBar()->setVisible(!menuBar()->isVisible());
     m_navigationToolbar->setSuperMenuVisible(!menuBar()->isVisible());
 
@@ -871,9 +875,11 @@ void BrowserWindow::toggleShowMenubar()
     Settings().setValue(QSL("Browser-View-Settings/showMenubar"), menuBar()->isVisible());
 
     // Make sure we show Navigation Toolbar when Menu Bar is hidden
+
     if (!m_navigationToolbar->isVisible() && !menuBar()->isVisible()) {
         toggleShowNavigationToolbar();
     }
+#endif
 }
 
 void BrowserWindow::toggleShowStatusBar()
@@ -910,7 +916,7 @@ void BrowserWindow::toggleShowNavigationToolbar()
 
     Settings().setValue(QSL("Browser-View-Settings/showNavigationToolbar"), m_navigationToolbar->isVisible());
 
-#ifndef Q_OS_MACOS
+#if !defined(Q_OS_MACOS)&&!defined(MAEMO)
     // Make sure we show Menu Bar when Navigation Toolbar is hidden
     if (!m_navigationToolbar->isVisible() && !menuBar()->isVisible()) {
         toggleShowMenubar();
