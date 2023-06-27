@@ -3,6 +3,7 @@ vulture-browser (23.06.27) unstable; urgency=low
   * Hide tabs by default
   * Allow hiding both main menu bar and navigation bar
   * Improved Hildon menu integration
+  * Add modification notice
 
  -- le0nklcpp le0nklcpp@gmail.com Tue 27 Jun 2023 22:51:00 +0300
 
