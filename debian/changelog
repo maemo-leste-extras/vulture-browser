@@ -1,15 +1,19 @@
 vulture-browser (23.06.20) unstable; urgency=low
+
   * Add pinch gesture
   * Add maemo menu support
   * Optimize main menu for Maemo
 
--- le0nklcpp le0nklcpp@gmail.com Sat 10 Jun 2023 22:05:00 +0300
+ -- le0nklcpp le0nklcpp@gmail.com Sat 10 Jun 2023 22:05:00 +0300
+
 vulture-browser (23.06.10) unstable; urgency=low
+
   * Fix crash on scrolling <select> item
   * Fix execution parameters in desktop file
   * Add zoom on double tap
 
--- le0nklcpp le0nklcpp@gmail.com Sat 10 Jun 2023 17:24:00 +0300
+ -- le0nklcpp le0nklcpp@gmail.com Sat 10 Jun 2023 17:24:00 +0300
+
 vulture-browser (23.04.4) unstable; urgency=low
 
   * Partially fix crash on scrolling <select> item
@@ -22,6 +26,7 @@ vulture-browser (23.04.4) unstable; urgency=low
   * Disable by default page element scrolling - it sometimes works too good
 
  -- le0nklcpp le0nklcpp@gmail.com Mon 29 May 2023 18:43:00 +0300
+
 vulture-browser (23.04.2) unstable; urgency=low
 
   * Jenkins integration
