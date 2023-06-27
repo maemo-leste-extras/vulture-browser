@@ -127,7 +127,7 @@ void TabBar::loadSettings()
 {
     Settings settings;
     settings.beginGroup("Browser-Tabs-Settings");
-    m_hideTabBarWithOneTab = settings.value("hideTabsWithOneTab", false).toBool();
+    m_hideTabBarWithOneTab = settings.value("hideTabsWithOneTab", true).toBool();
     bool activateLastTab = settings.value("ActivateLastTabWhenClosingActual", false).toBool();
     m_showCloseOnInactive = settings.value("showCloseOnInactiveTabs", 0).toInt(0);
     settings.endGroup();

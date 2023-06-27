@@ -230,7 +230,7 @@ Preferences::Preferences(BrowserWindow* window)
 
     //TABS
     settings.beginGroup("Browser-Tabs-Settings");
-    ui->hideTabsOnTab->setChecked(settings.value("hideTabsWithOneTab", false).toBool());
+    ui->hideTabsOnTab->setChecked(settings.value("hideTabsWithOneTab", true).toBool());
     ui->activateLastTab->setChecked(settings.value("ActivateLastTabWhenClosingActual", false).toBool());
     ui->openNewTabAfterActive->setChecked(settings.value("newTabAfterActive", true).toBool());
     ui->openNewEmptyTabAfterActive->setChecked(settings.value("newEmptyTabAfterActive", false).toBool());
