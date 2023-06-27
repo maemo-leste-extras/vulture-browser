@@ -864,9 +864,8 @@ void BrowserWindow::toggleShowMenubar()
     // We use one shared global menubar on Mac that can't be hidden
     return;
 #endif
-
-    setUpdatesEnabled(false);
 #ifndef MAEMO
+    setUpdatesEnabled(false);
     menuBar()->setVisible(!menuBar()->isVisible());
     m_navigationToolbar->setSuperMenuVisible(!menuBar()->isVisible());
 
